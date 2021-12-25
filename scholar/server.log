@@ -1,0 +1,44 @@
+12/25/2021 13:10:30 - INFO - Initialize the matchMode search engine
+12/25/2021 13:10:37 - INFO - Initialize the elasticMode search engine
+12/25/2021 13:10:37 - INFO - HEAD http://localhost:9200/scholar [status:200 request:0.011s]
+12/25/2021 13:10:37 - INFO - Start the server
+ * Serving Flask app 'server' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+12/25/2021 13:10:37 - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+12/25/2021 13:10:37 - INFO -  * Running on http://10.1.10.12:5003/ (Press CTRL+C to quit)
+12/25/2021 13:11:23 - INFO - Keyword: Yoshua Bengio, Mode: 2
+12/25/2021 13:11:23 - WARNING - GET http://localhost:9200/scholar/_search?size=20 [status:400 request:0.067s]
+12/25/2021 13:11:23 - ERROR - Exception on /search [POST]
+Traceback (most recent call last):
+  File "/home/deeplearning/anaconda3/envs/tzy/lib/python3.6/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/deeplearning/anaconda3/envs/tzy/lib/python3.6/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/deeplearning/anaconda3/envs/tzy/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/deeplearning/anaconda3/envs/tzy/lib/python3.6/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/deeplearning/anaconda3/envs/tzy/lib/python3.6/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "server.py", line 37, in search
+    tmp_result = elastic_search_engine.search_by_keyword(keyword)
+  File "/home/deeplearning/tzy/searchEngine/ElasticMode/search_utils.py", line 64, in search_by_keyword
+    result = self._search(body = body, size = 20)
+  File "/home/deeplearning/tzy/searchEngine/ElasticMode/search_utils.py", line 46, in _search
+    result = self.es.search(index = self.index, body = body, size = size)
+  File "/home/deeplearning/anaconda3/envs/tzy/lib/python3.6/site-packages/elasticsearch/client/utils.py", line 76, in _wrapped
+    return func(*args, params=params, **kwargs)
+  File "/home/deeplearning/anaconda3/envs/tzy/lib/python3.6/site-packages/elasticsearch/client/__init__.py", line 660, in search
+    doc_type, '_search'), params=params, body=body)
+  File "/home/deeplearning/anaconda3/envs/tzy/lib/python3.6/site-packages/elasticsearch/transport.py", line 318, in perform_request
+    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)
+  File "/home/deeplearning/anaconda3/envs/tzy/lib/python3.6/site-packages/elasticsearch/connection/http_urllib3.py", line 186, in perform_request
+    self._raise_error(response.status, raw_data)
+  File "/home/deeplearning/anaconda3/envs/tzy/lib/python3.6/site-packages/elasticsearch/connection/base.py", line 125, in _raise_error
+    raise HTTP_EXCEPTIONS.get(status_code, TransportError)(status_code, error_message, additional_info)
+elasticsearch.exceptions.RequestError: RequestError(400, 'search_phase_execution_exception', 'no mapping found for `name.keyword` in order to collapse on')
+12/25/2021 13:11:23 - INFO - 10.62.145.239 - - [25/Dec/2021 13:11:23] "[35m[1mPOST /search HTTP/1.1[0m" 500 -
